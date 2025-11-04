@@ -5,7 +5,7 @@ EMCC = emcc
 CXXFLAGS = -I./inc -s USE_SDL=2 -O3
 
 # Source files
-SRC = main.cpp renderer.cpp
+SRC = main.cpp renderer.cpp simulation.cpp
 
 # Output
 BUILD_DIR = build

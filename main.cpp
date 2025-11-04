@@ -11,6 +11,7 @@ using namespace std;
 
 #include "main.h"
 #include "renderer.h"
+#include "simulation.h"
 
 #include <iostream>
 #include <cassert>
@@ -23,20 +24,21 @@ using namespace std;
 
 SDL_Renderer* renderer = nullptr;
 float deltaTime = 0.0;
+bool bitmap[1250] = {false};
+bool eraserOn = false;
 
-bool quit = false;
+void render(){
+    // render
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_RenderClear(renderer);
 
-void inputs(){
-    SDL_Event event;
-    
-    //read all the inputs
-    while (SDL_PollEvent(&event) != 0) {
-        if (event.type == SDL_QUIT) {
-            quit = true;
-        }
-    }
+    drawGrid();
+    drawCells();
+
+    SDL_RenderPresent(renderer);
 }
 
+bool quit = false;
 void gameLoop() {
     // deltaTime calculation
     static Uint32 lastTime = SDL_GetTicks();
@@ -45,19 +47,8 @@ void gameLoop() {
     lastTime = currentTime;
 
     inputs();
-
-    // render
-    SDL_SetRenderDrawColor(renderer, 0, 0, 150, 255);
-    SDL_RenderClear(renderer);
-
-    int x, y;
-    Uint32 buttons = SDL_GetMouseState(&x, &y);
-
-    if(buttons & SDL_BUTTON(SDL_BUTTON_LEFT)){
-        drawRect(x, y, 10, 10, 255, 0, 0);
-    }
-
-    SDL_RenderPresent(renderer);
+    simulate();
+    render();
 
     if (quit) {
         emscripten_cancel_main_loop();
@@ -71,7 +62,7 @@ int main(int argc, char* argv[]) {
 
     SDL_Window* window = SDL_CreateWindow("CCA",
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        GAME_WIDTH, GAME_HEIGHT, 0);
+        GAME_WIDTH, GAME_HEIGHT+50, 0);
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
