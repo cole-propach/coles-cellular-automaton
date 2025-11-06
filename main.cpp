@@ -1,5 +1,32 @@
+/* Cole's Cellular Automaton
+
+A cell's neighborhood is composed of 4 leaves (labeled with 1, 2, 3, and 4). 0s are ignored cells, and C is the cell whose neighborhood we are looking at.
+
+0 0 1 0 0
+0 0 1 0 0
+4 4 C 2 2
+0 0 3 0 0
+0 0 3 0 0
+
+Leaves can be in 1 of 3 states, depending on the number of live cells it contains:
+    - Unpopulated: The leaf has exactly 0 live cells
+    - Semi Populated: The leaf has exactly 1 live cell
+    - Fully Populated: The lead has exactly 2 live cells
+
+Rules (inspired Conway's Game of Life):
+    - Live Cells
+        - Overpopulation:
+            A live cell with any fully populated leaves dies.
+        - Underpopulation:
+            A live cell with 0 semi populated leaves dies.
+        - Survival:
+            A live cell with any semi populated leaves stays alive.
+    - Dead Cells
+        - Reproduction:
+            A dead cell with exactly 2 semi populated leaves becomes alive.
+*/
+
 #include "inc/SDL2/SDL.h"
-//#include "inc/SDL2/SDL_image.h"
 #include <emscripten/emscripten.h>
 #include <stdio.h>
 #include <iostream>
@@ -62,7 +89,7 @@ int main(int argc, char* argv[]) {
 
     SDL_Window* window = SDL_CreateWindow("CCA",
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        GAME_WIDTH, GAME_HEIGHT+50, 0);
+        GAME_WIDTH, GAME_HEIGHT, 0);
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 

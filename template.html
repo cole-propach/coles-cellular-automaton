@@ -5,11 +5,16 @@
 <title>My SDL2 Game</title>
 </head>
 <body>
+  <h1>Cole's Cellular Automaton</h1>
 <canvas id="canvas"></canvas>
 <script>
   var Module = { canvas: document.getElementById('canvas') };
 </script>
 {{{ SCRIPT }}}
+<h2>Controls</h2>
+<h3>Left Click to place/erase cell</h3>
+<h3>Press E to swap between placing and erasing</h3>
+<h3>Press Right arrow to progress to the next generation (hold to fast forward)</h3>
 </body>
 
 <style>
@@ -18,15 +23,24 @@
     margin: 0;
   }
 
-  body {
+    body {
     display: flex;
-    justify-content: center; /* horizontal centering */
-    align-items: center;     /* vertical centering */
-    background-color: #222;  /* optional background */
+    flex-direction: column;
+    align-items: center;
+    background-color: #222;
+    color: white;
   }
 
   canvas {
-    border: 2px solid blue; /* optional styling */
+    border: 2px solid blue;
+  }
+
+  h1{
+    font-size: 3em;
+  }
+
+  h2{
+    font-size: 2.5em;
   }
 </style>
 </html>
