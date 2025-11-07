@@ -48,6 +48,9 @@ using namespace std;
 #include <utility>
 #include <algorithm>
 #include <cassert>
+#include <cstdlib>
+#include <ctime>
+
 
 SDL_Renderer* renderer = nullptr;
 float deltaTime = 0.0;
@@ -55,7 +58,6 @@ bool bitmap[1250] = {false};
 bool eraserOn = false;
 
 void render(){
-    // render
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderClear(renderer);
 
@@ -67,7 +69,6 @@ void render(){
 
 bool quit = false;
 void gameLoop() {
-    // deltaTime calculation
     static Uint32 lastTime = SDL_GetTicks();
     Uint32 currentTime = SDL_GetTicks();
     deltaTime = (currentTime - lastTime) / 1000.0f;
@@ -83,6 +84,7 @@ void gameLoop() {
 }
 
 int main(int argc, char* argv[]) {
+    srand(static_cast<unsigned int>(time(nullptr)));
     SDL_Init(SDL_INIT_VIDEO);
 
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
@@ -93,10 +95,8 @@ int main(int argc, char* argv[]) {
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-    // Start the main loop (browser-friendly)
     emscripten_set_main_loop(gameLoop, 0, 1);
 
-    // Cleanup happens inside gameLoop when quit = true
     return 0;
 }
 

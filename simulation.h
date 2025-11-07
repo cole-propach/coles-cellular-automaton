@@ -1,4 +1,3 @@
-
 std::pair<int, int> toGrid(int x, int y);
 int gridPosToIndex(const std::pair<int, int>& gridPos);
 void simulate();
@@ -13,3 +12,5 @@ struct InputStatus{
 extern InputStatus* inputStatus;
 
 void clearGrid();
+void loadPreset(int number);
+void insertChaos();
